@@ -18,7 +18,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: Text(widget.title),
+        //TODO: add ternary operator to display the message or the tables.
+        //Also use circularprogressindicator
+        child: Text('No tables found'),
       ),
       drawer: Appdrawer(
         title: widget.title,

@@ -1,3 +1,4 @@
+import 'package:baserowdroid/screens/ServerDetails.dart';
 import 'package:flutter/material.dart';
 
 class Appdrawer extends StatefulWidget {
@@ -24,8 +25,10 @@ class _AppdrawerState extends State<Appdrawer> {
             leading: const Icon(Icons.dns),
             title: const Text('Add/Update Server Info'),
             onTap: () {
-              //TODO: open the page to add or edit server details
               debugPrint("add/update server URL pressed");
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const Serverdetails(title: 'Server Details');
+              }));
             },
           ),
         ],

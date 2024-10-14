@@ -25,6 +25,12 @@ class _HomePageState extends State<HomePage> {
       drawer: Appdrawer(
         title: widget.title,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          debugPrint('Add table pressed');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

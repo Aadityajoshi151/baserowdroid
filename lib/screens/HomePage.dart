@@ -1,3 +1,4 @@
+import 'package:baserowdroid/widgets/AppDrawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,11 +14,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(widget.title)),
+        title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: Text(widget.title),
+      ),
+      drawer: Appdrawer(
+        title: widget.title,
       ),
     );
   }

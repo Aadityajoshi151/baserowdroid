@@ -40,13 +40,12 @@ class _AppdrawerState extends State<Appdrawer> {
         children: [
           ListTile(
             title: Text(widget.title),
-            subtitle: Text("$server_url\n$auth_token"),
+            subtitle: Text("Server URL: $server_url"),
           ),
           ListTile(
             leading: const Icon(Icons.dns),
             title: const Text('Add/Update Server Info'),
             onTap: () {
-              debugPrint("add/update server URL pressed");
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const Serverdetails(title: 'Server Details');
               }));

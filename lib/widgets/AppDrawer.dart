@@ -28,7 +28,13 @@ class _AppdrawerState extends State<Appdrawer> {
 
     readAuthToken().then((token) {
       setState(() {
-        auth_token = token;
+        if (token != "No token configured") {
+          auth_token = token.substring(0, 4) +
+              "-xxxx-" +
+              token.substring(token.length - 4);
+        } else {
+          auth_token = token;
+        }
       });
     });
   }
@@ -40,7 +46,8 @@ class _AppdrawerState extends State<Appdrawer> {
         children: [
           ListTile(
             title: Text(widget.title),
-            subtitle: Text("Server URL: $server_url"),
+            subtitle: Text(
+                "Server URL: " + server_url + "\nAuth Token: " + auth_token),
           ),
           ListTile(
             leading: const Icon(Icons.dns),

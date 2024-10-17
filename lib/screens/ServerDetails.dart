@@ -40,10 +40,19 @@ class _ServerdetailsState extends State<Serverdetails> {
   void writeServerValues() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('server_url', urlController.text);
-      await prefs.setString('auth_token', tokenController.text);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Server details added/updated sucessfully')));
+      if ((urlController.text.isEmpty) || (tokenController.text.isEmpty)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please enter server details')));
+      } else {
+        await prefs.setString('server_url', urlController.text);
+        await prefs.setString('auth_token', tokenController.text);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Server details added/updated sucessfully')));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Error occurred. Please try again')));
@@ -84,10 +93,6 @@ class _ServerdetailsState extends State<Serverdetails> {
               ElevatedButton(
                 onPressed: () {
                   writeServerValues();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
                 },
                 child: const Text('Add/Update'),
               )

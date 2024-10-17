@@ -2,8 +2,7 @@ import 'package:baserowdroid/widgets/AppDrawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title; //Name of the application
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("BaserowDroid"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -23,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         child: Text('No tables found'),
       ),
       drawer: Appdrawer(
-        title: widget.title,
+        title: "BaserowDroid",
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -1,6 +1,7 @@
 import 'package:baserowdroid/screens/ServerDetails.dart';
 import 'package:baserowdroid/utils/FetchAuthToken.dart';
 import 'package:baserowdroid/utils/FetchServerURL.dart';
+import '../Constants.dart' as constants;
 import 'package:flutter/material.dart';
 
 class Appdrawer extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AppdrawerState extends State<Appdrawer> {
 
     readAuthToken().then((token) {
       setState(() {
-        if (token != "No token configured") {
+        if (token != constants.AUTH_TOKEN_DEFAULT_VALUE) {
           auth_token = token.substring(0, 4) +
               "-xxxx-" +
               token.substring(token.length - 4);
@@ -54,7 +55,8 @@ class _AppdrawerState extends State<Appdrawer> {
             title: const Text('Add/Update Server Info'),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const Serverdetails(title: 'Server Details');
+                return const Serverdetails(
+                    title: constants.SERVER_DETAILS_PAGE_TITLE);
               }));
             },
           ),

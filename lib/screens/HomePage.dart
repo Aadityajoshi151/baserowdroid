@@ -1,4 +1,5 @@
 import 'package:baserowdroid/widgets/AppDrawer.dart';
+import '../Constants.dart' as constants;
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BaserowDroid"),
+        title: const Text(constants.APP_NAME),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         child: Text('No tables found'),
       ),
       drawer: Appdrawer(
-        title: "BaserowDroid",
+        title: constants.APP_NAME,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

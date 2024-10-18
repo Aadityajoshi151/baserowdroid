@@ -3,6 +3,7 @@ import 'package:baserowdroid/utils/FetchAuthToken.dart';
 import 'package:baserowdroid/utils/FetchServerURL.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Constants.dart' as constants;
 
 class Serverdetails extends StatefulWidget {
   const Serverdetails({super.key, required this.title});
@@ -22,7 +23,7 @@ class _ServerdetailsState extends State<Serverdetails> {
 
     readServerUrl().then((url) {
       setState(() {
-        if (url != "No URL configured") {
+        if (url != constants.SERVER_URL_DEFAULT_VALUE) {
           urlController.text = url;
         }
       });
@@ -30,7 +31,7 @@ class _ServerdetailsState extends State<Serverdetails> {
 
     readAuthToken().then((token) {
       setState(() {
-        if (token != "No token configured") {
+        if (token != constants.AUTH_TOKEN_DEFAULT_VALUE) {
           tokenController.text = token;
         }
       });

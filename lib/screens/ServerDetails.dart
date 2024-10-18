@@ -1,8 +1,10 @@
 import 'package:baserowdroid/screens/HomePage.dart';
 import 'package:baserowdroid/utils/FetchAuthToken.dart';
 import 'package:baserowdroid/utils/FetchServerURL.dart';
+import 'package:baserowdroid/utils/ShowSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Constants.dart' as constants;
 
 class Serverdetails extends StatefulWidget {
   const Serverdetails({super.key, required this.title});
@@ -22,7 +24,7 @@ class _ServerdetailsState extends State<Serverdetails> {
 
     readServerUrl().then((url) {
       setState(() {
-        if (url != "No URL configured") {
+        if (url != constants.SERVER_URL_DEFAULT_VALUE) {
           urlController.text = url;
         }
       });
@@ -30,7 +32,7 @@ class _ServerdetailsState extends State<Serverdetails> {
 
     readAuthToken().then((token) {
       setState(() {
-        if (token != "No token configured") {
+        if (token != constants.AUTH_TOKEN_DEFAULT_VALUE) {
           tokenController.text = token;
         }
       });
@@ -41,21 +43,18 @@ class _ServerdetailsState extends State<Serverdetails> {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if ((urlController.text.isEmpty) || (tokenController.text.isEmpty)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please enter server details')));
+        showSnackBar(context, 'Please enter server details');
       } else {
         await prefs.setString('server_url', urlController.text);
         await prefs.setString('auth_token', tokenController.text);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Server details added/updated sucessfully')));
+        showSnackBar(context, 'Server details added/updated sucessfully');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error occurred. Please try again')));
+      showSnackBar(context, 'Error occurred. Please try again');
     }
   }
 

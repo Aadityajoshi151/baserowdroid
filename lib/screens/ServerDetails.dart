@@ -40,11 +40,11 @@ class _ServerdetailsState extends State<Serverdetails> {
   }
 
   void writeServerValues() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      if ((urlController.text.isEmpty) || (tokenController.text.isEmpty)) {
-        showSnackBar(context, 'Please enter server details');
-      } else {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if ((urlController.text.isEmpty) || (tokenController.text.isEmpty)) {
+      showSnackBar(context, 'Please enter server details');
+    } else {
+      try {
         await prefs.setString('server_url', urlController.text);
         await prefs.setString('auth_token', tokenController.text);
         showSnackBar(context, 'Server details added/updated sucessfully');
@@ -52,9 +52,9 @@ class _ServerdetailsState extends State<Serverdetails> {
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
+      } catch (e) {
+        showSnackBar(context, 'Error occurred. Please try again');
       }
-    } catch (e) {
-      showSnackBar(context, 'Error occurred. Please try again');
     }
   }
 

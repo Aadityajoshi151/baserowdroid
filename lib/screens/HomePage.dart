@@ -1,3 +1,4 @@
+import 'package:baserowdroid/screens/TableDataForm.dart';
 import 'package:baserowdroid/widgets/AppDrawer.dart';
 import '../Constants.dart' as constants;
 import 'package:flutter/material.dart';
@@ -27,7 +28,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint('Add table pressed');
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const TableDataForm(title: "Add Table");
+          }));
         },
         child: const Icon(Icons.add),
       ),

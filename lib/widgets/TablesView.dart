@@ -1,6 +1,7 @@
 import 'package:baserowdroid/screens/TableDataForm.dart';
 import 'package:baserowdroid/utils/ShowSnackBar.dart';
 import 'package:baserowdroid/utils/database_helper.dart';
+import 'package:baserowdroid/widgets/TableTile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/table_data_model.dart';
@@ -39,72 +40,7 @@ class _TablesViewState extends State<TablesView> {
               itemCount: tables.length,
               itemBuilder: (context, index) {
                 final table = tables[index];
-                return ListTile(
-                  title: Text(table.tableName), // Display table name
-                  subtitle: Text('Local Table Id: ' +
-                      table.id.toString() +
-                      '\nBaserow Table ID: ' +
-                      table.baserowTableId.toString()),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return TableDataForm(
-                                title: "Update Table",
-                                tableName: table.tableName,
-                                id: table.id,
-                                baserow_table_id: table.baserowTableId,
-                              );
-                            }));
-                          },
-                          icon: Icon(Icons.edit)),
-                      IconButton(
-                          onPressed: () {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      title: const Text("Are You Sure?"),
-                                      content: Text("This will delete '" +
-                                          table.tableName +
-                                          "' table entry from this device. No changes are made on the Baserow instance."),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text('No'),
-                                        ),
-                                        TextButton(
-                                            onPressed: () async {
-                                              try {
-                                                await dbHelper
-                                                    .deleteTableData(table.id!);
-                                                showSnackBar(
-                                                    context, 'Table Deleted');
-                                                setState(() {});
-                                              } catch (e) {
-                                                showSnackBar(
-                                                    context, 'Error Occurred');
-                                              }
-                                              Navigator.pop(context, 'Yes');
-                                            },
-                                            child: Text("Yes"))
-                                      ],
-                                    ));
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.deepOrange,
-                          )),
-                    ],
-                  ),
-                  onTap: () {
-                    // Handle tap on ListTile if needed
-                    debugPrint(table.tableName);
-                  },
-                );
+                return TableTile(table: table, dbHelper: dbHelper);
               },
             );
           }

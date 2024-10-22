@@ -15,6 +15,26 @@ class TablesView extends StatefulWidget {
 
 class _TablesViewState extends State<TablesView> {
   final dbHelper = DatabaseHelper();
+  List<TableData> tableDataList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTableData(); // Fetch table data when the page loads
+  }
+
+  void _fetchTableData() async {
+    List<TableData> data = await dbHelper.getAllTableData();
+    setState(() {
+      tableDataList = data;
+    });
+  }
+
+  void _refreshUI() {
+    // This will be called after a delete operation to refresh the UI
+    _fetchTableData(); // Re-fetch the table data from the database
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,12 +55,12 @@ class _TablesViewState extends State<TablesView> {
             return Center(child: Text('No tables available'));
           } else {
             // If data is available, display it in a ListView
-            final tables = snapshot.data!;
             return ListView.builder(
-              itemCount: tables.length,
+              itemCount: tableDataList.length,
               itemBuilder: (context, index) {
-                final table = tables[index];
-                return TableTile(table: table, dbHelper: dbHelper);
+                final table = tableDataList[index];
+                return TableTile(
+                    table: table, dbHelper: dbHelper, onDelete: _refreshUI);
               },
             );
           }

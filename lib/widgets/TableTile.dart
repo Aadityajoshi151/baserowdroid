@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class TableTile extends StatefulWidget {
   final TableData table;
   final DatabaseHelper dbHelper;
+  final VoidCallback onDelete;
 
   const TableTile({
     Key? key,
     required this.table,
     required this.dbHelper,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -61,8 +63,12 @@ class _TableTileState extends State<TableTile> {
                                   try {
                                     await widget.dbHelper
                                         .deleteTableData(widget.table.id!);
-                                    showSnackBar(context, 'Table Deleted');
-                                    setState(() {});
+                                    widget.onDelete();
+                                    showSnackBar(
+                                        context,
+                                        "Table '" +
+                                            widget.table.tableName +
+                                            "' Deleted");
                                   } catch (e) {
                                     showSnackBar(context, 'Error Occurred');
                                   }

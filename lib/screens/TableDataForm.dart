@@ -38,6 +38,13 @@ class _TableDataFormState extends State<TableDataForm> {
     }
   }
 
+  @override
+  void dispose() {
+    table_name_controller.dispose();
+    baserow_table_id_controller.dispose();
+    super.dispose();
+  }
+
   void addTableDataToDB() async {
     if ((table_name_controller.text.isEmpty) ||
         (baserow_table_id_controller.text.isEmpty)) {

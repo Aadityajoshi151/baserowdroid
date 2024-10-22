@@ -39,6 +39,13 @@ class _ServerdetailsState extends State<Serverdetails> {
     });
   }
 
+  @override
+  void dispose() {
+    urlController.dispose();
+    tokenController.dispose();
+    super.dispose();
+  }
+
   void writeServerValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if ((urlController.text.isEmpty) || (tokenController.text.isEmpty)) {

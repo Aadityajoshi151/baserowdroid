@@ -1,8 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+import '../utils/api_helper.dart';
 import 'package:baserowdroid/models/table_data_model.dart';
 import 'package:baserowdroid/screens/TableDataForm.dart';
 import 'package:baserowdroid/utils/ShowSnackBar.dart';
 import 'package:baserowdroid/utils/database_helper.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 class TableTile extends StatefulWidget {
   final TableData table;
@@ -21,6 +34,7 @@ class TableTile extends StatefulWidget {
 }
 
 class _TableTileState extends State<TableTile> {
+  final ApiService apiService = ApiService();
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -84,8 +98,20 @@ class _TableTileState extends State<TableTile> {
               )),
         ],
       ),
-      onTap: () {
-        debugPrint(widget.table.tableName);
+      onTap: () async {
+        final responsebody =
+            await apiService.fetchFields(widget.table.baserowTableId);
+        String? primaryColumn;
+        if (responsebody != null) {
+          String? primaryColumn;
+          for (var item in responsebody) {
+            if (item['primary'] == true) {
+              primaryColumn = item['name'];
+              break;
+            }
+          }
+          print(primaryColumn);
+        }
       },
     );
   }

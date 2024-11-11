@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:baserowdroid/screens/CustomTableView.dart';
+
 import '../utils/api_helper.dart';
 import 'package:baserowdroid/models/table_data_model.dart';
 import 'package:baserowdroid/screens/TableDataForm.dart';
@@ -111,6 +113,12 @@ class _TableTileState extends State<TableTile> {
             }
           }
           print(primaryColumn);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CustomTableView(
+                title: widget.table.tableName,
+                tableId: widget.table.baserowTableId,
+                primaryColumn: primaryColumn!);
+          }));
         }
       },
     );

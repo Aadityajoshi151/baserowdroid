@@ -112,11 +112,10 @@ class _TableTileState extends State<TableTile> {
               break;
             }
           }
-          print(primaryColumn);
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return CustomTableView(
                 title: widget.table.tableName,
-                tableId: widget.table.baserowTableId,
+                tableId: widget.table.baserowTableId.toString(),
                 primaryColumn: primaryColumn!);
           }));
         }

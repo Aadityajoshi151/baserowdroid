@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:baserowdroid/screens/HomePage.dart';
+import 'package:baserowdroid/widgets/TableTile.dart';
 import 'package:flutter/material.dart';
 import 'Constants.dart' as constants;
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 

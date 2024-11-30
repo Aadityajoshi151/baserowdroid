@@ -4,22 +4,11 @@ import 'FetchServerURL.dart';
 import 'FetchAuthToken.dart';
 
 class ApiService {
-  late final String serverUrl;
-  late final String authToken;
-
-  ApiService() {
-    _initializeConfig();
-  }
-
-  Future<void> _initializeConfig() async {
-    serverUrl = await readServerUrl();
-    authToken = await readAuthToken();
-  }
-
   Future<List<dynamic>?> fetchFields(int tableId) async {
-    await _ensureConfigInitialized();
-    final url = Uri.parse('$serverUrl/api/database/fields/table/$tableId/');
     try {
+      final serverUrl = await readServerUrl();
+      final authToken = await readAuthToken();
+      final url = Uri.parse('$serverUrl/api/database/fields/table/$tableId/');
       final response = await http.get(
         url,
         headers: {
@@ -37,15 +26,16 @@ class ApiService {
   }
 
   Future<List<dynamic>?> fetchTableRows(int tableId) async {
-    //await _ensureConfigInitialized();
-    var new_url = Uri.parse(
-            'https://baserow.akaza.home/api/database/rows/table/$tableId/')
-        .replace(queryParameters: {'user_field_names': 'true'});
     try {
+      final serverUrl = await readServerUrl();
+      final authToken = await readAuthToken();
+      final newUrl = Uri.parse('$serverUrl/api/database/rows/table/$tableId/')
+          .replace(queryParameters: {'user_field_names': 'true'});
+
       final response = await http.get(
-        new_url,
+        newUrl,
         headers: {
-          'Authorization': 'Token OmShyeW8vl7lnG3mdgKWV7OCAmNU7hO8',
+          'Authorization': 'Token $authToken',
         },
       );
       if (response.statusCode == 200) {
@@ -56,12 +46,6 @@ class ApiService {
       }
     } catch (e) {
       return null;
-    }
-  }
-
-  Future<void> _ensureConfigInitialized() async {
-    while (serverUrl.isEmpty || authToken.isEmpty) {
-      await Future.delayed(const Duration(milliseconds: 10));
     }
   }
 }
